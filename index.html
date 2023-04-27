@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- link de style de bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <!-- link de iconos bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+    <!-- link de favicon -->
+    <link rel="shortcut icon" href="./assets/img/favicon.ico" />
+    <title>PresupuestoApp</title>
+  </head>
+  <body class="bg-body-tertiary">
+    <nav class="navbar bg-body-secondary shadow">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"> 💰 PresupuestoApp </a>
+      </div>
+    </nav>
+    <main>
+      <div class="container mt-5">
+        <div class="card shadow">
+          <div class="card-body">
+            <span class="card-subtitle mb-2 text-body-secondary">Saldo</span>
+            <h2 id="saldo" class=""></h2>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col">
+            <div class="card shadow">
+              <div class="card-body">
+                <span class="card-subtitle mb-2 text-body-secondary">Presupuesto</span>
+                <h4 id="presupuesto" class=""></h4>
+                <div class="text-end">
+                  <button
+                    id="botonPresupuesto"
+                    type="button"
+                    class="btn btn-success"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalFormPresupuesto"
+                  >
+                    Agregar Presupuesto
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow">
+              <div class="card-body">
+                <span class="card-subtitle mb-2 text-body-secondary">Gastos</span>
+                <h4 id="gastos" class=""></h4>
+                <div class="text-end">
+                  <button
+                    id="botonGasto"
+                    type="button"
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalFormGasto"
+                  >
+                    Agregar Gasto
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4">
+          <div class="card shadow">
+            <div class="card-body bg-body-secondary">
+              <h4>Lista de Gastos</h4>
+              <div id="movimientos" class="mt-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- inicio de modal para agregar el presupuesto -->
+      <div
+        class="modal fade"
+        id="modalFormPresupuesto"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="formPresupuesto">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Presupuesto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <label for="valorPresupuesto" class="form-label">Ingresa tu presupuesto</label>
+                <input
+                  id="valorPresupuesto"
+                  class="form-control"
+                  name="valorPresupuesto"
+                  type="number"
+                  min="1"
+                  step="1"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success">Agregar Presupuesto</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- inicio de modal para agregar los gastos -->
+      <div
+        class="modal fade"
+        id="modalFormGasto"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="formGastos">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Agregar Gasto</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div>
+                  <label for="nombreGasto" class="form-label">Gasto</label>
+                  <input id="nombreGasto" class="form-control" name="nombreGasto" type="text" required />
+                </div>
+                <div class="mt-2">
+                  <label for="valorGasto" class="form-label">Valor</label>
+                  <input
+                    id="valorGasto"
+                    class="form-control"
+                    name="valorGasto"
+                    type="number"
+                    min="1"
+                    step="1"
+                    required
+                  />
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-danger">Agregar Gasto</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- inicio de modal para avisar que existe un error, los gastos son mayores que el saldo -->
+      <div
+        class="modal fade"
+        id="modalError"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Error</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <p>El gasto que quieres realizar supera el saldo disponible.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- scrip de bootstrap -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
+      crossorigin="anonymous"
+    ></script>
+    <!-- scrip personal -->
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>
